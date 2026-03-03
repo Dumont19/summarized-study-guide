@@ -160,7 +160,6 @@ header {
 .view.active { display: block; }
 .view-content { padding: 32px 40px; max-width: 860px; }
 
-/* Sidebar overlay for mobile */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -249,7 +248,7 @@ header {
 .sb-subitem { padding-left: 20px; }
 .sb-item:hover             { background: var(--black4); }
 .sb-item.active            { background: var(--white5); }
-.sb-item.active .sb-item-name { color: var(--white); }
+.sb-item.active .sb-item-name { color: var(--white); font-weight: 700; }
 
 .sb-dot {
   width: 4px;
@@ -441,7 +440,6 @@ header {
 
 .exam-body { padding: 32px 40px; max-width: 760px; }
 
-/* Question card */
 .q-card {
   background: var(--black2);
   border: 1px solid var(--line2);
@@ -501,7 +499,6 @@ header {
   border-radius: 3px;
 }
 
-/* Answer options */
 .q-options { padding: 4px 12px 16px; display: flex; flex-direction: column; gap: 7px; }
 .q-opt {
   display: flex;
@@ -569,7 +566,6 @@ header {
   display: block;
 }
 
-/* Action bar */
 .exam-actions {
   position: sticky;
   bottom: 0;
@@ -584,7 +580,6 @@ header {
 }
 .action-info { font-size: 11px; font-family: var(--mono); color: var(--white4); margin-left: auto; }
 
-/* Buttons */
 .btn {
   height: 34px;
   padding: 0 16px;
@@ -610,9 +605,6 @@ header {
 .btn-ghost:hover { color: var(--white3); }
 .btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* ═══════════════════════════════════════════════
-   EXAM GATE SCREENS (start / result)
-   ═══════════════════════════════════════════════ */
 .exam-gate {
   display: flex;
   flex-direction: column;
@@ -671,16 +663,12 @@ header {
 .domain-bar-fill { height: 100%; border-radius: 100px; background: var(--white); }
 .domain-pct     { font-size: 11px; font-family: var(--mono); color: var(--white4); width: 34px; text-align: right; }
 
-/* ── ANIMATION ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .fade-up { animation: fadeUp 0.25s ease forwards; }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — TABLET (≤900px)
-   ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   :root { --sidebar-w: 230px; }
   .h-tag { display: none; }
@@ -691,19 +679,13 @@ header {
   .subtopic-grid { grid-template-columns: 1fr; }
 }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — MOBILE (≤768px)
-   ═══════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Show hamburger */
   .menu-toggle { display: flex; }
-  /* Hide decorative header items */
   .h-sep   { display: none; }
   .h-badge { display: none; }
   .h-tag   { display: none; }
   .logo-text { display: none; }
 
-  /* Sidebar → slide-in drawer */
   .sidebar {
     position: fixed;
     top: var(--header-h);
@@ -716,17 +698,14 @@ header {
   }
   .sidebar.open { transform: translateX(0); }
 
-  /* Main fills full width */
   .app  { position: relative; }
   .main { width: 100%; }
 
-  /* Study content */
   .view-content { padding: 16px; max-width: 100%; }
   .module-title { font-size: 20px; }
   .subtopic-grid { grid-template-columns: 1fr; }
   .summary-block { padding: 14px 16px; font-size: 13px; }
 
-  /* Exam */
   .exam-header  { padding: 0 16px; gap: 10px; height: auto; min-height: 48px; padding-top: 6px; padding-bottom: 6px; }
   .exam-title   { font-size: 11px; }
   .exam-body    { padding: 14px 16px; }
@@ -740,7 +719,6 @@ header {
   .q-opt-text { font-size: 12px; }
   .q-explanation { margin: 0 10px 10px; font-size: 12px; padding: 12px 14px; }
 
-  /* Gate screens */
   .exam-gate  { padding: 32px 16px; gap: 20px; }
   .gate-title { font-size: 28px; }
   .gate-desc  { font-size: 13px; }
@@ -750,14 +728,10 @@ header {
 
   .btn { height: 32px; padding: 0 12px; font-size: 11px; }
 
-  /* Tips */
   .tip-item { padding: 10px 12px; gap: 10px; }
   .tip-text  { font-size: 12px; }
 }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — SMALL PHONES (≤400px)
-   ═══════════════════════════════════════════════ */
 @media (max-width: 400px) {
   .gate-title { font-size: 22px; }
   .module-title { font-size: 17px; }
@@ -765,4 +739,30 @@ header {
   .gate-stat-val { font-size: 18px; }
   .nav-pill { padding: 0 8px; font-size: 10px; }
   .btn { padding: 0 10px; }
+}
+
+/* ── TEMA CLARO E DESTAQUE ATIVO ── */
+body.light-theme {
+  --black:   #f4f6f8;
+  --black2:  #ffffff;
+  --black3:  #e9ecef;
+  --black4:  #dee2e6;
+  --black5:  #ced4da;
+  --white:   #111111;
+  --white2:  #333333;
+  --white3:  #555555;
+  --white4:  #777777;
+  --white5:  #999999;
+  --line:    rgba(0,0,0,0.08);
+  --line2:   rgba(0,0,0,0.15);
+}
+
+body.light-theme .sb-item.active {
+  background: var(--white2);
+}
+body.light-theme .sb-item.active .sb-item-name {
+  color: var(--white);
+}
+body.light-theme .sb-item.active .sb-dot {
+  background: var(--white);
 }
