@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnowPro Core COF-C03 · Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="logo-mark">
+    <div class="logo-sq">
+      <svg viewBox="0 0 24 24" fill="black">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </div>
+    SnowPro
+  </div>
+  <div class="h-sep"></div>
+  <span class="h-tag">Core Certification</span>
+  <span class="h-badge">COF-C03</span>
+  <div class="h-right">
+    <button class="nav-pill active" id="btnStudy" onclick="switchView('study')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      Study Guide
+    </button>
+    <button class="nav-pill" id="btnExam" onclick="switchView('exam')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Mock Exam
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════ APP BODY ═══════════════ -->
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div class="sb-label">Domains</div>
+      <div class="sb-search">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Search topics…" id="sbSearch"
+               oninput="filterSidebar(this.value)">
+      </div>
+    </div>
+    <div class="sb-list" id="sbList"></div>
+    <div class="sb-footer">
+      <div class="sb-score-row">
+        <span class="sb-score-label">EXAM WEIGHT</span>
+        <span class="sb-score-val">100%</span>
+      </div>
+      <div class="sb-bar"><div class="sb-bar-fill" style="width:100%"></div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ─── STUDY VIEW ─── -->
+    <div class="view active" id="studyView">
+      <div class="view-content" id="studyContent">
+        <div class="empty-msg">Select a domain from the sidebar to start studying.</div>
+      </div>
+    </div>
+
+    <!-- ─── EXAM VIEW ─── -->
+    <div class="view" id="examView">
+
+      <!-- Start screen -->
+      <div id="examStart" class="exam-gate fade-up">
+        <div class="gate-pre">Mock Exam · COF-C03</div>
+        <div class="gate-title">SnowPro Core<br>Practice Test</div>
+        <div class="gate-desc">
+          60 questions spanning all 5 domains, weighted by official exam percentages.
+          Passing score: 75% (750/1000 scaled).
+        </div>
+        <div class="gate-stats">
+          <div class="gate-stat">
+            <div class="gate-stat-val">60</div>
+            <div class="gate-stat-label">Questions</div>
+          </div>
+          <div class="gate-stat">
+            <div class="gate-stat-val">90</div>
+            <div class="gate-stat-label">Minutes</div>
+          </div>
+          <div class="gate-stat">
+            <div class="gate-stat-val">75%</div>
+            <div class="gate-stat-label">Pass Score</div>
+          </div>
+          <div class="gate-stat">
+            <div class="gate-stat-val">$175</div>
+            <div class="gate-stat-label">Exam Fee</div>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="startExam()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Start Exam
+        </button>
+      </div>
+
+      <!-- Questions panel -->
+      <div id="examQuestions" style="display:none; flex-direction:column; height:100%;">
+        <div class="exam-header">
+          <span class="exam-title">Mock Exam</span>
+          <div class="exam-prog-wrap">
+            <div class="exam-prog-fill" id="examProg"></div>
+          </div>
+          <span class="exam-stat" id="examStat">0 / 60</span>
+          <div class="exam-timer" id="examTimer">90:00</div>
+        </div>
+
+        <div style="flex:1; overflow-y:auto;">
+          <div class="exam-body" id="examBody"></div>
+        </div>
+
+        <div class="exam-actions">
+          <button class="btn btn-outline" id="btnPrev" onclick="prevQ()">← Prev</button>
+          <button class="btn btn-outline" id="btnNext" onclick="nextQ()">Next →</button>
+          <button class="btn btn-ghost"   id="btnCheck" onclick="checkAnswer()">Check Answer</button>
+          <span class="action-info" id="actionInfo"></span>
+          <button class="btn btn-white" id="btnFinish" style="display:none;" onclick="finishExam()">
+            Finish Exam
+          </button>
+        </div>
+      </div>
+
+      <!-- Results screen -->
+      <div id="examResult" class="exam-gate fade-up" style="display:none;">
+        <div class="gate-pre">Exam Complete</div>
+        <div class="gate-title" id="resultTitle">Results</div>
+        <div id="resultRing" class="result-score-ring">
+          <div class="result-score-val"   id="resultPct">—</div>
+          <div class="result-score-label" id="resultLabel">SCORE</div>
+        </div>
+        <div class="gate-stats" id="resultStats"></div>
+        <div class="domain-rows" id="domainBreakdown"></div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+          <button class="btn btn-white"   onclick="reviewExam()">Review Answers</button>
+          <button class="btn btn-outline" onclick="resetExam()">Retake Exam</button>
+        </div>
+      </div>
+
+    </div><!-- /examView -->
+
+  </main>
+</div>
+
+<!-- Scripts: data first, then app logic -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
