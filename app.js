@@ -48,6 +48,14 @@ function switchView(v) {
   document.getElementById('btnExam').classList.toggle('active',   v === 'exam');
 }
 
+/* ── THEME TOGGLE ── */
+function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+  const isLight = document.body.classList.contains('light-theme');
+  document.getElementById('icon-sun').style.display = isLight ? 'none' : 'block';
+  document.getElementById('icon-moon').style.display = isLight ? 'block' : 'none';
+}
+
 /* ── SIDEBAR ── */
 function buildSidebar() {
   const list = document.getElementById('sbList');
@@ -73,7 +81,13 @@ function buildSidebar() {
       const si = document.createElement('div');
       si.className = 'sb-item sb-subitem';
       si.id = 'si-' + d.id + '-' + i;
-      si.onclick = () => { selectDomain(d.id); setTimeout(() => scrollToSub(d.id, i), 120); };
+      si.onclick = (e) => { 
+        e.stopPropagation();
+        selectDomain(d.id); 
+        document.querySelectorAll('.sb-subitem').forEach(el => el.classList.remove('active-sub'));
+        si.classList.add('active-sub');
+        setTimeout(() => scrollToSub(d.id, i), 120); 
+      };
       si.innerHTML = '<div class="sb-dot" style="background:var(--white5)"></div><div class="sb-item-name" style="font-size:11.5px;color:var(--white4)">' + sub.name + '</div>';
       group.appendChild(si);
     });
@@ -94,6 +108,7 @@ function filterSidebar(query) {
 function selectDomain(id) {
   currentDomain = id;
   document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.sb-subitem').forEach(el => el.classList.remove('active-sub'));
   const el = document.getElementById('si-' + id);
   if (el) el.classList.add('active');
   renderDomain(id);

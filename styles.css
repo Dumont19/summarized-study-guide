@@ -92,14 +92,14 @@ header {
 .logo-sq {
   width: 26px;
   height: 26px;
-  background: var(--white);
+  background: #080808 !important;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
-.logo-sq svg { width: 14px; height: 14px; }
+.logo-sq svg { width: 14px; height: 14px; fill: #ffffff !important; }
 .logo-text { white-space: nowrap; }
 
 .h-sep { width: 1px; height: 18px; background: var(--line2); flex-shrink: 0; }
@@ -249,6 +249,9 @@ header {
 .sb-item:hover             { background: var(--black4); }
 .sb-item.active            { background: var(--white5); }
 .sb-item.active .sb-item-name { color: var(--white); font-weight: 700; }
+
+.sb-subitem.active-sub { background: var(--black4); }
+.sb-subitem.active-sub .sb-item-name { color: var(--white); font-weight: 700; }
 
 .sb-dot {
   width: 4px;
@@ -758,11 +761,13 @@ body.light-theme {
 }
 
 body.light-theme .sb-item.active {
-  background: var(--white2);
+  background: var(--black3);
+  border-left: 3px solid #111111;
+  border-radius: 0 4px 4px 0;
 }
-body.light-theme .sb-item.active .sb-item-name {
-  color: var(--white);
-}
-body.light-theme .sb-item.active .sb-dot {
-  background: var(--white);
+body.light-theme .sb-item.active .sb-item-name { color: #111111; }
+body.light-theme .sb-item.active .sb-dot { background: var(--white); }
+
+body.light-theme .sb-subitem.active-sub {
+  background: var(--black5);
 }
